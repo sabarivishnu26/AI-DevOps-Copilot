@@ -1,0 +1,21 @@
+2024-01-15T10:23:41Z WARN  BackOff 3m16s (x45 over 12m) kubelet Back-off restarting failed container
+2024-01-15T10:23:41Z WARNING pod/my-nodejs-app-7d9f8b6c5-xk2p9 Back-off restarting failed container
+Events:
+  Type     Reason     Age                    From               Message
+  ----     ------     ----                   ----               -------
+  Normal   Scheduled  14m                    default-scheduler  Successfully assigned default/my-nodejs-app-7d9f8b6c5-xk2p9 to node-1
+  Normal   Pulling    14m                    kubelet            Pulling image "myrepo/nodejs-app:latest"
+  Normal   Pulled     13m                    kubelet            Successfully pulled image "myrepo/nodejs-app:latest"
+  Normal   Created    13m (x4 over 13m)      kubelet            Created container nodejs-app
+  Normal   Started    13m (x4 over 13m)      kubelet            Started container nodejs-app
+  Warning  BackOff    2m (x32 over 12m)      kubelet            Back-off restarting failed container
+
+Container logs:
+Error: Cannot find module '/app/server.js'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1039:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:885:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/run_main:81:12)
+    at node:internal/main/run_main_module:23:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
