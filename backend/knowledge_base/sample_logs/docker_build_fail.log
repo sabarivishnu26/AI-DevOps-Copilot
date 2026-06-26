@@ -1,0 +1,25 @@
+Step 1/8 : FROM python:3.11-slim
+ ---> a8d4e92d4b3f
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+Step 3/8 : COPY requirements.txt .
+ ---> Using cache
+Step 4/8 : RUN pip install -r requirements.txt
+ ---> Running in f8e3a2d1c9b7
+Collecting django==4.2.0
+  Downloading Django-4.2.0-py3-none-any.whl (8.0 MB)
+Collecting psycopg2==2.9.9
+  Downloading psycopg2-2.9.9.tar.gz (383 kB)
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  error: subprocess-exited-with-error
+  × pip subprocess to install build dependencies did not run successfully.
+  error: legacy-install-failure
+
+  × Encountered error while trying to install package.
+  ╰─> psycopg2
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+hint: See above for output from the subprocess.
+
+The command '/bin/sh -c pip install -r requirements.txt' returned a non-zero code: 1
