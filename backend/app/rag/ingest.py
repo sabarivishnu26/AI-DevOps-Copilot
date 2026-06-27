@@ -28,6 +28,15 @@ loader = DirectoryLoader(
 )
 
 documents = loader.load()
+for doc in documents:
+    source = doc.metadata["source"]
+
+    # Get folder name
+    category = os.path.basename(
+        os.path.dirname(source)
+    )
+
+    doc.metadata["category"] = category
 
 print(f"Loaded {len(documents)} documents.")
 

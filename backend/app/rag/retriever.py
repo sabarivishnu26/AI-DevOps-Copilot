@@ -1,5 +1,5 @@
 import os
-
+from typing import Optional
 from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain_community.vectorstores import Chroma
 
@@ -16,12 +16,19 @@ db = Chroma(
     embedding_function=embedding_model
 )
 
-retriever = db.as_retriever(
-    search_kwargs={
-        "k": 3
-    }
-)
 
+def retrieve(query: str, category: Optional[str] = None):
+    print("CATEGORY:", category)
 
-def retrieve(query: str):
-    return retriever.invoke(query)
+    if category:
+        results = db.similarity_search_with_score(
+            query=query,
+            k=3,
+            filter={"category": category}
+        )
+        print("FILTERED RESULTS:", len(results))
+        return results
+
+    results = db.similarity_search_with_score(query=query, k=3)
+    print("GENERAL RESULTS:", len(results))
+    return results
