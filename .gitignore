@@ -6,7 +6,7 @@ __pycache__/
 
 # Environment
 .env
-
+**/.env
 # Vector database (optional)
 vectordb/
 
