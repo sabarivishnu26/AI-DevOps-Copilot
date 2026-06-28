@@ -25,6 +25,7 @@ def get_db():
 
 @router.get(
     "/analyze/{filename}",
+    response_model=AnalysisResponse
 )
 async def analyze(
     filename: str,

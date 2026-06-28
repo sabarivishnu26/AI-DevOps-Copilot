@@ -47,8 +47,12 @@ def analyze_log(
     )
 
     # 6. Confidence score (vector similarity based)
-    confidence = max(scores) if scores else 0
-    confidence = round((1 - confidence) * 100, 2)
+    best_distance = min(scores) if scores else 1.0
+    retrieval_confidence = max(
+        0,
+        min(100, round((1 / (1 + best_distance)) * 100, 2))
+    )
+    
 
     # 7. Build prompt
     formatted_prompt = prompt.format(
@@ -71,7 +75,7 @@ def analyze_log(
 
     # 10. Attach metadata
     analysis["filename"] = filename
-    analysis["confidence_score"] = confidence
+    analysis["confidence_score"] = retrieval_confidence
     analysis["retrieved_documents"] = [
         os.path.basename(doc.metadata["source"])
         for doc in docs
@@ -86,11 +90,12 @@ def analyze_log(
             log_type=log_type or "general",
             root_cause=analysis.get("root_cause", ""),
             severity=analysis.get("severity", "Unknown"),
-            confidence_score=confidence,
+            confidence_score=retrieval_confidence,
             details_json=json.dumps(analysis)
         )
         db.add(incident)
         db.commit()
+        print("Incident saved successfully")
     except Exception as e:
         print(f"Error saving incident to database: {e}")
         db.rollback()
